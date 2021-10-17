@@ -33,9 +33,9 @@ router.get("/", async function (req, res, next) {
   res.render('admin_view/index', {staffAccounts, trainerAccounts});
 });
 
-/* GET ... page. */
 const getUserByRole = async (roleName, userId) => {
   let user;
+
   switch(roleName) {
     case 'trainingStaff': {
       user = await TrainingStaff.findOne({
@@ -45,6 +45,7 @@ const getUserByRole = async (roleName, userId) => {
       })
       return user;
     }
+
     case 'trainer': {
       user = await Trainer.fineOne({
         where: {
@@ -60,15 +61,49 @@ const getUserByRole = async (roleName, userId) => {
   res.send(user);
 }
 
+const getAccountById = async (accountId) => {
+  const account = await Account.findOne({
+    where: {
+      id: accountId
+    },
+    include: Role
+  })
+  return account;
+}
+
+const deleteUserByRole = async (roleName, userId) => {
+  let result;
+
+  switch(roleName) {
+    case 'trainingStaff': {
+      result = await TrainingStaff.destroy({
+        where: {
+          id: userId
+        }
+      })
+      return result;
+    }
+
+    case 'trainer': {
+      result = await Trainer.destroy({
+        where: {
+          id: userId
+        }
+      })
+      return result;
+    }
+    default: {
+      res.send('Not found any users');
+    }
+  }
+  res.send(result);
+}
+
+/* GET account page. */
 router.get("/viewAccount", async function (req, res, next) {
   try {
     const {id} = req.query;
-    const account = await Account.findOne({
-      where: {
-        id
-      },
-      include: Role
-    })
+    const account = await getAccountById(id);
 
     const user = await getUserByRole(account.Role.name, account.userId);
     const accountDetail = {...account.dataValues, User: user};
@@ -79,6 +114,26 @@ router.get("/viewAccount", async function (req, res, next) {
     res.redirect('/admin');
   }
 });
+
+/* GET delete account page. */
+router.get("/deleteAccount", async (req, res) => {
+  try {
+    const {id} = req.query;
+    const account = await getAccountById(id);
+    const result = await deleteUserByRole(account.Role.name, account.userId);
+    await Account.destroy({
+      where: {
+        id
+      }
+    })
+    if(result) {
+      res.redirect('/admin');
+    }
+  } catch (error) {
+    console.log("🚀 ~ file: admin.js ~ line 68 ~ router.get ~ error", error)
+    res.redirect('/admin');
+  }
+})
 
 /* GET create staff page. */
 router.get("/createStaff", async function (req, res, next) {
