@@ -1,4 +1,5 @@
 var express = require("express");
+const course = require("../database/models/course");
 var router = express.Router();
 const database = require("../database/models/index");
 const Role = database.db.Role;
@@ -201,5 +202,6 @@ router.post("/addTrainer", async function (req, res) {
     res.redirect("/admin");
   }
 });
+
 
 module.exports = router;
