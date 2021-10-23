@@ -22,7 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   TrainerCourse.init({
-    trainerId: DataTypes.INTEGER
+    trainerId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
+    courseId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    }
   }, {
     sequelize,
     modelName: 'TrainerCourse',

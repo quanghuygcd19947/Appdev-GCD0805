@@ -6,6 +6,7 @@ const Account = database.db.Account;
 const Trainee = database.db.trainee;
 const Trainer = database.db.trainer;
 const Course = database.db.course;
+const CourseCategory = database.db.courseCategory;
 const TrainerCourse = database.db.TrainerCourse;
 
 /* GET home page. */
@@ -25,6 +26,15 @@ router.get("/", async function (req, res, next) {
 
   res.render('staff_view/index', {traineeAccounts, traineeAccounts});
 });
+
+const courseCategories = await CourseCategory.findAll();
+const courses = await Course.findAll({
+  include: CourseCategory
+});
+
+const trainerCourses = await TrainerCourse.findAll({
+  include: [Trainer, Course]
+})
 
 const getUserByRole = async (roleName, userId) => {
   let user;
@@ -174,7 +184,4 @@ router.post("assignTrainer", async (req, res) => {
 })
 
 
-
-
-  
-  module.exports = router;
+module.exports = router;
