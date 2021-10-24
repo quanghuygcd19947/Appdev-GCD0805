@@ -3,13 +3,13 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return [
-      await queryInterface.addConstraint("TrainerCourse", {
+      await queryInterface.addConstraint("TrainerCourses", {
         fields: ["trainerId"],
         type: "foreign key",
         name: "custom_fkey_constraint_trainerId",
         references: {
           //Required field
-          table: "Trainers",
+          table: "trainers",
           field: "id",
         },
         onDelete: "cascade",
@@ -17,12 +17,12 @@ module.exports = {
       }),
 
       await queryInterface.addConstraint("TrainerCourses", {
-        fields: ["trainerId"],
+        fields: ["courseId"],
         type: "foreign key",
-        name: "custom_fkey_constraint_trainerId",
+        name: "custom_fkey_constraint_courseId",
         references: {
           //Required field
-          table: "Trainers",
+          table: "courses",
           field: "id",
         },
         onDelete: "cascade",

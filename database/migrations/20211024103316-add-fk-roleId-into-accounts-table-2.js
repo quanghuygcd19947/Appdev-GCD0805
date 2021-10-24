@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.addConstraint("Accounts", {
       fields: ["roleId"],
       type: "foreign key",
-      name: "custom_fkey_constraint_roleId",
+      name: "custom_fkey_constraint_roleId_2",
       references: {
         //Required field
         table: "Roles",
@@ -19,7 +19,7 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     await queryInterface.removeConstraint(
       "Accounts",
-      "custom_fkey_constraint_roleId"
+      "custom_fkey_constraint_roleId_2"
     );
   },
 };

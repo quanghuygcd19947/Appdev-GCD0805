@@ -16,7 +16,7 @@
         <select
             class="form-control"
             id="exampleFormControlSelect1"
-            name="trainer"
+            name="trainerId"
           >
             <% trainers.forEach(function(trainer) { %>
             <option value="<%= trainer.id %>"><%= trainer.fullname %></option>
@@ -29,7 +29,7 @@
         <select
             class="form-control"
             id="exampleFormControlSelect1"
-            name="trainer"
+            name="courseId"
           >
             <% courses.forEach(function(course) { %>
             <option value="<%= course.id %>"><%= course.name %></option>
