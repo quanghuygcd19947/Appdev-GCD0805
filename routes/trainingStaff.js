@@ -209,7 +209,7 @@ router.post("/addCourse", async function (req, res) {
   res.redirect("/trainingStaff");
 });
 
-/* GET Asign Trainer. */
+/* GET Assign Trainer. */
 router.get("/assignTrainer", async (req, res) => {
   const trainers = await Trainer.findAll();
   
@@ -234,5 +234,10 @@ router.post("/assignTrainer", async (req, res) => {
     console.log("🚀 ~ file: trainingStaff.js ~ line 233 ~ router.post ~ error", error)
   }
 });
+
+/* GET Assign Trainee. */
+
+
+
 
 module.exports = router;
