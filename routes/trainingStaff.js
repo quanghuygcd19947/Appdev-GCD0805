@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const database = require("../database/models/index");
+const { Op } = require("sequelize");
 const Role = database.db.Role;
 const Account = database.db.Account;
 const Trainee = database.db.trainee;
@@ -174,6 +175,49 @@ router.post("/addTrainee", async function (req, res) {
   }
 });
 
+router.get('/updateTrainee/:id', async (req, res) => {
+  const {id} = req.params;
+  const traineeAccount = await Account.findOne({
+    where: {
+      id
+    },
+    include: Role
+  })
+
+  const {id: accountId, username, password} = traineeAccount
+
+  const traineeInfo = await Trainee.findOne({
+    where: {
+      id: traineeAccount.userId
+    }
+  })
+
+  const traineeData = {...traineeInfo.dataValues, username, password, accountId};    //destructuring ES6
+  
+  res.render('./trainee_view/update', {
+    traineeData
+  })
+})
+
+router.post('/editTrainee', async (req, res) => {
+  const {accountId, username, password, traineeId, fullname, education, dateOfBirth, age, email} = req.body;
+
+  const updatedAccount = await Account.update({ username, password}, {
+    where: {
+      id: accountId
+    }
+  })
+
+  const updatedTrainee = await Account.update({ fullname, education, dateOfBirth, age, email}, {
+    where: {
+      id: traineeId
+    }
+  })
+
+  res.redirect('/trainingStaff');
+
+})
+
 /* GET create course category page. */
 router.get("/createcourseCategory", async function (req, res) {
   res.render("./courseCategory_view/create");
@@ -234,6 +278,26 @@ router.post("/assignTrainer", async (req, res) => {
     console.log("🚀 ~ file: trainingStaff.js ~ line 233 ~ router.post ~ error", error)
   }
 });
+
+router.get("removeTrainerTask/:trainerId/:courseId", async (req, res) => {
+  const {trainerId, courseId} = req.params;
+  //res.send(`trainerId: ${trainerId}, courseId: ${courseId}`)
+
+//   await TrainerCourse.destroy({
+//     where: {
+//       [Op.and]: [{ trainerId: trainerId }, { courseId: courseId }],
+//     }
+//   })
+
+await TrainerCourse.destroy({
+  where: {
+    trainerId: trainerId,
+    courseId: courseId
+  }
+})
+
+res.redirect('/trainingStaff');
+})
 
 /* GET Assign Trainee. */
 
