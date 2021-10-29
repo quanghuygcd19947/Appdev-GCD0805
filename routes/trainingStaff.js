@@ -129,7 +129,7 @@ router.get("/deleteAccount", async (req, res) => {
       "🚀 ~ file: trainingStaff.js ~ line 123 ~ router.get ~ error",
       error
     );
-    res.redirect("/admin");
+    res.redirect("/trainningStaff");
   }
 });
 
@@ -303,5 +303,26 @@ res.redirect('/trainingStaff');
 
 
 
+
+/* GET Search Course. */
+router.get("/search", async (req, res) => {
+  res.render("search_view");
+})
+
+router.post("/doSearch", async (req, res) => {
+
+  const {courseName} = req. body;
+
+  const trainers = await TrainerCourse.findAll({
+    include: [{
+      model: Course,
+      attributes: ['name']
+    }, {
+      model: Trainer,
+      attributes: ['fullnanme']
+    }],
+    attributes: ['trainerId, courseId']
+  })
+})
 
 module.exports = router;
