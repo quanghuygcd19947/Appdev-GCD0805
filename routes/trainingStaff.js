@@ -35,12 +35,14 @@ router.get("/", async function (req, res, next) {
   const trainerCourses = await TrainerCourse.findAll({
     include: [Trainer, Course],
   });
+  //res.send(trainerCourses);
 
   res.render("staff_view/index", {
     traineeAccounts,
     traineeAccounts,
     courseCategories,
     courses,
+    trainerCourses,
   });
 });
 
@@ -279,9 +281,9 @@ router.post("/assignTrainer", async (req, res) => {
   }
 });
 
-router.get("removeTrainerTask/:trainerId/:courseId", async (req, res) => {
+router.get("/removeTrainerTask/:trainerId/:courseId", async (req, res) => {
   const {trainerId, courseId} = req.params;
-  //res.send(`trainerId: ${trainerId}, courseId: ${courseId}`)
+  // res.send(`trainerId: ${trainerId}, courseId: ${courseId}`)
 
 //   await TrainerCourse.destroy({
 //     where: {
@@ -305,24 +307,24 @@ res.redirect('/trainingStaff');
 
 
 /* GET Search Course. */
-router.get("/search", async (req, res) => {
-  res.render("search_view");
-})
+// router.get("/search", async (req, res) => {
+//   res.render("search_view");
+// })
 
-router.post("/doSearch", async (req, res) => {
+// router.post("/doSearch", async (req, res) => {
 
-  const {courseName} = req. body;
+//   const {courseName} = req. body;
 
-  const trainers = await TrainerCourse.findAll({
-    include: [{
-      model: Course,
-      attributes: ['name']
-    }, {
-      model: Trainer,
-      attributes: ['fullnanme']
-    }],
-    attributes: ['trainerId, courseId']
-  })
-})
+//   const trainers = await TrainerCourse.findAll({
+//     include: [{
+//       model: Course,
+//       attributes: ['name']
+//     }, {
+//       model: Trainer,
+//       attributes: ['fullnanme']
+//     }],
+//     attributes: ['trainerId, courseId']
+//   })
+// })
 
 module.exports = router;
