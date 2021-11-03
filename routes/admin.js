@@ -194,6 +194,7 @@ router.get("/updateStaff/:updateId", async function (req, res, next) {
 })
 
 router.post("/editStaff", async function (req, res) {
+  const { id, username, password } = req.body;
   try {
     const updatedStaff = await Account.update({
       username,
@@ -204,6 +205,8 @@ router.post("/editStaff", async function (req, res) {
         id: id
       }
     })
+
+    res.redirect("/admin");
   } catch (error) {
   console.log("🚀 ~ file: admin.js ~ line 208 ~ error", error)
   }
@@ -265,6 +268,7 @@ router.get("/updateTrainer/:updateId", async function (req, res, next) {
 })
 
 router.post("/editTrainer", async function (req, res) {
+  const { id, username, password } = req.body;
   try {
     const updatedTrainer = await Account.update({
       username,
@@ -275,6 +279,8 @@ router.post("/editTrainer", async function (req, res) {
         id: id
       }
     })
+
+    res.redirect("/admin");
   } catch (error) {
   console.log("🚀 ~ file: admin.js ~ line 279 ~ error", error)
   }

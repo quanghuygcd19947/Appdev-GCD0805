@@ -248,6 +248,60 @@ router.post("/addCourseCategory", async function (req, res) {
   res.redirect("/trainingStaff");
 });
 
+router.get("/updateCourseCategory/:updateId", async function (req, res) {
+  const { updateId } = req.params;
+  try {
+    const courseCategories = await CourseCategory.findAll({
+      where: {
+        id: updateId
+      }
+    })
+    const { id, name, description } = courseCategories[0].dataValues;
+    res.render("courseCategory_view/update", {
+      id: id,
+      name: name,
+      description: description
+    })
+  } catch (error) {
+  console.log("🚀 ~ file: trainingStaff.js ~ line 266 ~ error", error)
+  }
+})
+
+router.post("/editCourseCategory", async function (req, res) {
+  const { id, name, description } = req.body;
+  try {
+    const updatedCourseCategory = await CourseCategory.update({
+      name,
+      description
+    },
+    {
+      where: {
+        id: id
+      }
+    })
+
+    res.redirect('/trainingStaff');
+  } catch (error) {
+  console.log("🚀 ~ file: trainingStaff.js ~ line 285 ~ error", error)
+  }
+})
+
+router.get("/deleteCourseCategory/:deleteId", async function (req, res) {
+  const { deleteId } = req.params;
+  try {
+    const deletedCousreCategory = await CourseCategory.destroy({
+      where: {
+        id: deleteId
+      }
+    })
+
+    res. redirect('/trainingStaff');
+  } catch (error) {
+  console.log("🚀 ~ file: trainingStaff.js ~ line 300 ~ error", error)
+  }
+})
+
+
 /* GET create course page. */
 router.get("/createCourse", async function (req, res) {
   const courseCategories = await CourseCategory.findAll();
@@ -266,6 +320,64 @@ router.post("/addCourse", async function (req, res) {
 
   res.redirect("/trainingStaff");
 });
+
+router.get("/updateCourse/:updateId", async function (req, res) {
+  const { updateId } = req.params;
+  try {
+    const courseCategories = await CourseCategory.findAll();
+    const courses = await Course.findAll({
+      where: {
+        id: updateId
+      }
+    })
+    const { id, name, description } = courses[0].dataValues;
+
+    res.render("course_view/update", {
+      id: id,
+      courseName: name,
+      description: description,
+      courseCategories: courseCategories
+    })
+  } catch (error) {
+  console.log("🚀 ~ file: trainingStaff.js ~ line 289 ~ error", error)
+  }
+})
+
+router.post("/editCourse", async function (req, res) {
+  const { id, name, description, courseCategoryId } = req.body;
+  try {
+    const updateCourse = await Course.update({
+      name, 
+      description,
+      courseCategoryId
+    },
+    {
+      where: {
+        id: id
+      }
+    })
+
+    res.redirect('/trainingStaff');
+  } catch (error) {
+  console.log("🚀 ~ file: trainingStaff.js ~ line 307 ~ error", error)
+  }
+})
+
+router.get("/deleteCourse/:deleteId", async function (req, res) {
+  const { deleteId } = req.params;
+  
+  try {
+    const deletedcourse = await Course.destroy({
+      where: {
+        id: deleteId
+      }
+    })
+
+    res.redirect('/trainingStaff');
+  } catch (error) {
+    console.log("🚀 ~ file: trainingStaff.js ~ line 324 ~ error", error)
+  }
+})
 
 /* GET Assign Trainer. */
 router.get("/assignTrainer", async (req, res) => {

@@ -65,7 +65,7 @@
                 <td>
                   <div>
                     <a href="/trainingStaff/updateTrainee/<%= account.id %>">
-                      <button type="button" class="btn btn-primary btn-sm">
+                      <button type="button" class="btn btn-warning btn-sm">
                         <i class="fas fa-user-edit"></i> Update
                       </button>
                     </a>
@@ -112,7 +112,8 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
-                <th scope="col">Action</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -124,7 +125,16 @@
                 
                 <td>
                   <div>
-                    <a href="">
+                    <a href="/trainingStaff/updateCourseCategory/<%= courseCategory.id %>">
+                      <button type="button" class="btn btn-warning btn-sm">
+                        <i class="fas fa-user-edit"></i> Update
+                      </button>
+                    </a>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <a href="/trainingStaff/deleteCourseCategory/<%= courseCategory.id %>">
                       <button type="button" class="btn btn-danger btn-sm">
                         <i class="fas fa-user-minus"></i> Delete
                       </button>
@@ -163,7 +173,8 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Course Category</th>
-                <th scope="col">Action</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -175,7 +186,16 @@
                 
                 <td>
                   <div>
-                    <a href="">
+                    <a href="/trainingStaff/updateCourse/<%= course.id %>">
+                      <button type="button" class="btn btn-warning btn-sm">
+                        <i class="fas fa-user-edit"></i> Update
+                      </button>
+                    </a>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <a href="/trainingStaff/deleteCourse/<%= course.id %>">
                       <button type="button" class="btn btn-danger btn-sm">
                         <i class="fas fa-user-minus"></i> Delete
                       </button>
