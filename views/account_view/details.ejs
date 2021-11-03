@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Accounts's Details</h6>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" width="100%" cellspacing="0" style="text-align: center;">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">username</th>
+                    <th scope="col">password</th>
+                    <th scope="col">fullname</th>
+                    <% if(accountDetail.Role.name === 'trainer') {%>
+                    <th scope="col">specialty</th>
+                    <% } %>
+                    <th scope="col">age</th>
+                    <th scope="col">email</th>
+                    <% if(accountDetail.Role.name === 'trainingStaff' || accountDetail.Role.name === 'trainer') {%>
+                    <th scope="col">address</th>
+                    <% } %>
+                    <% if(accountDetail.Role.name === 'trainee') {%>
+                      <th scope="col">Date of birth</th>
+                      <th scope="col">Education</th>
+                    <% } %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="row"><%= accountDetail.id %></td>
+                    <td><%= accountDetail.username %></td>
+                    <td><%= accountDetail.password %></td>
+                    <td><%= accountDetail.User.fullname %></td>
+                    <% if(accountDetail.Role.name === 'trainer') {%>
+                    <td><%= accountDetail.User.specialty %></td>
+                    <% } %>
+                    <td><%= accountDetail.User.age %></td>
+                    <td><%= accountDetail.User.email %></td>
+                    <% if(accountDetail.Role.name === 'trainingStaff' || accountDetail.Role.name === 'trainer') {%>
+                    <td><%= accountDetail.User.address %></td>
+                    <% } %>
+                    <% if(accountDetail.Role.name === 'trainee') {%>
+                      <td><%= accountDetail.User.dateOfBirth %></td>
+                      <td><%= accountDetail.User.education %></td>
+                    <% } %>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

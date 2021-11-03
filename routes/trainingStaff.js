@@ -114,7 +114,10 @@ router.get("/viewAccount", async function (req, res, next) {
     const user = await getUserByRole(account.Role.name, account.userId);
     const accountDetail = { ...account.dataValues, User: user };
 
-    res.send(accountDetail);
+    res.render("account_view/details", {
+      accountDetail
+    })
+    //res.send(accountDetail);
   } catch (error) {
     console.log(error);
     res.redirect("/trainingStaff");
@@ -334,6 +337,20 @@ router.post("/assignTrainee", async (req, res) => {
   } catch (error) {
   console.log("🚀 ~ file: trainingStaff.js ~ line 326 ~ router.post ~ error", error)
   }
+})
+
+router.get("/removeTraineeTask/:traineeId/:courseId", async (req, res) => {
+  const {traineeId, courseId} = req.params;
+  // res.send(`traineeId: ${traineeId}, courseId: ${courseId}`)
+
+await TraineeCourse.destroy({
+  where: {
+    traineeId: traineeId,
+    courseId: courseId
+  }
+})
+
+res.redirect('/trainingStaff');
 })
 
 

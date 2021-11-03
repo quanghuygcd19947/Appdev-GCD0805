@@ -48,7 +48,7 @@ const getUserByRole = async (roleName, userId) => {
     }
 
     case 'trainer': {
-      user = await Trainer.fineOne({
+      user = await Trainer.findOne({
         where: {
           id: userId
         }
@@ -109,7 +109,10 @@ router.get("/viewAccount", async function (req, res, next) {
     const user = await getUserByRole(account.Role.name, account.userId);
     const accountDetail = {...account.dataValues, User: user};
 
-    res.send(accountDetail);
+    res.render("account_view/details", {
+      accountDetail
+    })
+    //res.send(accountDetail);
   } catch (error) {
     console.log(error);
     res.redirect('/admin');
@@ -169,6 +172,43 @@ router.post("/addStaff", async function (req, res) {
   }
 });
 
+router.get("/updateStaff/:updateId", async function (req, res, next) {
+  try {
+    const { updateId } = req. params;
+    const staffAccount = await Account.findAll({
+      where: {
+        id: updateId,
+      },
+    });
+    const { id, username, password } = staffAccount[0].dataValues;
+    console.log("🚀 ~ file: admin.js ~ line 184 ~ staffAccount", staffAccount)
+
+    res.render("staff_view/update", {
+      id,
+      username,
+      password,
+    })
+  } catch (error) {
+  console.log("🚀 ~ file: admin.js ~ line 192 ~ error", error)
+  }
+})
+
+router.post("/editStaff", async function (req, res) {
+  try {
+    const updatedStaff = await Account.update({
+      username,
+      password,
+    },
+    {
+      where: {
+        id: id
+      }
+    })
+  } catch (error) {
+  console.log("🚀 ~ file: admin.js ~ line 208 ~ error", error)
+  }
+})
+
 /* GET create trainer page. */
 router.get("/createTrainer", async function (req, res, next) {
   const trainerRole = await Role.findOne({
@@ -202,6 +242,44 @@ router.post("/addTrainer", async function (req, res) {
     res.redirect("/admin");
   }
 });
+
+router.get("/updateTrainer/:updateId", async function (req, res, next) {
+  try {
+    const { updateId } = req. params;
+    const trainerAccount = await Account.findAll({
+      where: {
+        id: updateId,
+      },
+    });
+    const { id, username, password } = trainerAccount[0].dataValues;
+    console.log("🚀 ~ file: admin.js ~ line 255 ~ trainerAccount", trainerAccount)
+
+    res.render("trainer_view/update", {
+      id,
+      username,
+      password,
+    })
+  } catch (error) {
+  console.log("🚀 ~ file: admin.js ~ line 263 ~ error", error)
+  }
+})
+
+router.post("/editTrainer", async function (req, res) {
+  try {
+    const updatedTrainer = await Account.update({
+      username,
+      password,
+    },
+    {
+      where: {
+        id: id
+      }
+    })
+  } catch (error) {
+  console.log("🚀 ~ file: admin.js ~ line 279 ~ error", error)
+  }
+})
+
 
 
 module.exports = router;

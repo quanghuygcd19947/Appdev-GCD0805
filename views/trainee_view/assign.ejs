@@ -10,7 +10,7 @@
 <body>
   <h1>Assign Trainee to Course</h1>
   <div class="container">
-    <form action="/trainingStaff/assignTrainer" method="POST">
+    <form action="/trainingStaff/assignTrainee" method="POST">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Trainee</label>
         <select
@@ -19,7 +19,7 @@
             name="traineeId"
           >
             <% trainees.forEach(function(trainee) { %>
-            <option value="<%= trainer.id %>"><%= trainee.fullname %></option>
+            <option value="<%= trainee.id %>"><%= trainee.fullname %></option>
             <% }); %>
           </select>
       </div>

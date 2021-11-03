@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+/>
+<h1>Update TrainingStaff</h1>
+<div class="container">
+<form action="/admin/editStaff" method="POST">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">ID</label>
+    <input
+      type="text"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      value="<%= id %>"
+      name="id"
+      readonly
+    />
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Username</label>
+    <input
+      type="text"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      value="<%= username %>"
+      name="username"
+      readonly
+    />
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="id_password"
+      value="<%= password %>"
+      name="password"
+      autocomplete="current-password"
+    /><i class="far fa-eye" id="togglePassword" style="cursor: pointer"></i>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    <i class="fas fa-check-circle"></i> Update
+  </button>
+  <a href="/admin/staffAccount">
+    <button type="button" class="btn btn-secondary">
+      <i class="fas fa-times-circle"></i> Cancel
+    </button>
+  </a>
+</form>
+</div>
+<script>
+const togglePassword = document.querySelector("#togglePassword");
+const password = document.querySelector("#id_password");
+
+togglePassword.addEventListener("click", function (e) {
+  const type =
+    password.getAttribute("type") === "password" ? "text" : "password";
+  password.setAttribute("type", type);
+  this.classList.toggle("fa-eye-slash");
+});
+</script>
+</body>
+</html>
