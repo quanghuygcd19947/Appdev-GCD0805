@@ -112,9 +112,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
-                <th scope="col">View</th>
-                <th scope="col">Update</th>
-                <th scope="col">Delete</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -124,24 +122,6 @@
                 <td><%= courseCategory.name %></td>
                 <td><%= courseCategory.description %></td>
                 
-                <td>
-                  <div>
-                    <a href="">
-                      <button type="button" class="btn btn-success btn-sm">
-                        <i class="fas fa-user-edit"></i> View
-                      </button>
-                    </a>
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    <a href="">
-                      <button type="button" class="btn btn-primary btn-sm">
-                        <i class="fas fa-user-edit"></i> Update
-                      </button>
-                    </a>
-                  </div>
-                </td>
                 <td>
                   <div>
                     <a href="">
@@ -183,9 +163,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Course Category</th>
-                <th scope="col">View</th>
-                <th scope="col">Update</th>
-                <th scope="col">Delete</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -195,24 +173,6 @@
                 <td><%= course.name %></td>
                 <td><%= course.description %></td>
                 
-                <td>
-                  <div>
-                    <a href="">
-                      <button type="button" class="btn btn-success btn-sm">
-                        <i class="fas fa-user-edit"></i> View
-                      </button>
-                    </a>
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    <a href="">
-                      <button type="button" class="btn btn-primary btn-sm">
-                        <i class="fas fa-user-edit"></i> Update
-                      </button>
-                    </a>
-                  </div>
-                </td>
                 <td>
                   <div>
                     <a href="">
@@ -233,7 +193,7 @@
     <div class="card shadow mb-4">
       <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">
-          Courses
+          Trainer's Tasks
         </h6>
       </div>
       <div class="card-body">
@@ -266,6 +226,56 @@
                 <td>
                   <div>
                     <a href="/trainingStaff/removeTrainerTask/<%= TrainerCourse.trainerId %>/<%= TrainerCourse.courseId %>">
+                      <button type="button" class="btn btn-danger btn-sm">
+                        <i class="fas fa-user-minus"></i> Delete
+                      </button>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          Trainee's Tasks
+        </h6>
+      </div>
+      <div class="card-body">
+        <a href="/trainingStaff/assignTrainee">
+          <button type="button" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus-circle"></i> Assign Trainee to Course
+          </button>
+        </a>
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% traineeCourses.forEach(function(TraineeCourse) { %>
+              <tr>
+               
+                <td><%= TraineeCourse.trainee.fullname %></td>
+                <td><%= TraineeCourse.course.name %></td>
+                
+                <td>
+                  <div>
+                    <a href="">
                       <button type="button" class="btn btn-danger btn-sm">
                         <i class="fas fa-user-minus"></i> Delete
                       </button>

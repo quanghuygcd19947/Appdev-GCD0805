@@ -9,6 +9,7 @@ const Trainer = database.db.trainer;
 const Course = database.db.course;
 const CourseCategory = database.db.courseCategory;
 const TrainerCourse = database.db.TrainerCourse;
+const TraineeCourse = database.db.TraineeCourse;
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -37,13 +38,21 @@ router.get("/", async function (req, res, next) {
   });
   //res.send(trainerCourses);
 
+  const traineeCourses = await TraineeCourse.findAll({
+    include: [Trainee, Course],
+  });
+  //res.send(traineeCourses);
+
   res.render("staff_view/index", {
     traineeAccounts,
     traineeAccounts,
     courseCategories,
     courses,
     trainerCourses,
+    traineeCourses,
   });
+
+  
 });
 
 const getUserByRole = async (roleName, userId) => {
@@ -302,6 +311,30 @@ res.redirect('/trainingStaff');
 })
 
 /* GET Assign Trainee. */
+router.get("/assignTrainee", async (req, res) => {
+  const trainees = await Trainee.findAll();
+
+  const courses = await Course.findAll();
+  res.render("trainee_view/assign", {
+    trainees,
+    courses,
+  });
+});
+
+router.post("/assignTrainee", async (req, res) => {
+  try {
+    const { traineeId, courseId } = req.body;
+
+    const result = await TraineeCourse.create({
+      traineeId,
+      courseId,
+    });
+
+    res.redirect("/trainingStaff")
+  } catch (error) {
+  console.log("🚀 ~ file: trainingStaff.js ~ line 326 ~ router.post ~ error", error)
+  }
+})
 
 
 
