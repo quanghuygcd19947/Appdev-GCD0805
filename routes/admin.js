@@ -31,7 +31,10 @@ router.get("/", async function (req, res, next) {
     }]
   })
 
-  res.render('admin_view/index', {staffAccounts, trainerAccounts});
+  res.render('layouts/master', {
+    content: "../admin_view/index",
+    staffAccounts,
+    trainerAccounts});
 });
 
 const getUserByRole = async (roleName, userId) => {
@@ -109,7 +112,8 @@ router.get("/viewAccount", async function (req, res, next) {
     const user = await getUserByRole(account.Role.name, account.userId);
     const accountDetail = {...account.dataValues, User: user};
 
-    res.render("account_view/details", {
+    res.render("layouts/master", {
+      content: "../account_view/details",
       accountDetail
     })
     //res.send(accountDetail);
@@ -146,7 +150,9 @@ router.get("/createStaff", async function (req, res, next) {
       name: "trainingStaff",
     },
   });
-  res.render("trainingStaff_view/create", { staffRole: staffRole });
+  res.render("layouts/master", {
+    content: "../trainingStaff_view/create",
+    staffRole: staffRole });
 });
 
 router.post("/addStaff", async function (req, res) {
@@ -183,7 +189,8 @@ router.get("/updateStaff/:updateId", async function (req, res, next) {
     const { id, username, password } = staffAccount[0].dataValues;
     console.log("🚀 ~ file: admin.js ~ line 184 ~ staffAccount", staffAccount)
 
-    res.render("staff_view/update", {
+    res.render("layouts/master", {
+      content: "../staff_view/update",
       id,
       username,
       password,
@@ -219,7 +226,9 @@ router.get("/createTrainer", async function (req, res, next) {
       name: "trainer",
     },
   });
-  res.render("trainer_view/create", { trainerRole: trainerRole });
+  res.render("layouts/master", {
+    content: "trainer_view/create",
+    trainerRole: trainerRole });
 });
 
 router.post("/addTrainer", async function (req, res) {
@@ -257,7 +266,8 @@ router.get("/updateTrainer/:updateId", async function (req, res, next) {
     const { id, username, password } = trainerAccount[0].dataValues;
     console.log("🚀 ~ file: admin.js ~ line 255 ~ trainerAccount", trainerAccount)
 
-    res.render("trainer_view/update", {
+    res.render("layouts/master", {
+      content: "../trainer_view/update",
       id,
       username,
       password,

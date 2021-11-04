@@ -43,7 +43,8 @@ router.get("/", async function (req, res, next) {
   });
   //res.send(traineeCourses);
 
-  res.render("staff_view/index", {
+  res.render("layouts/master", {
+    content: "../staff_view/index",
     traineeAccounts,
     traineeAccounts,
     courseCategories,
@@ -114,7 +115,8 @@ router.get("/viewAccount", async function (req, res, next) {
     const user = await getUserByRole(account.Role.name, account.userId);
     const accountDetail = { ...account.dataValues, User: user };
 
-    res.render("account_view/details", {
+    res.render("layouts/master", {
+      content: "../account_view/details",
       accountDetail
     })
     //res.send(accountDetail);
@@ -154,7 +156,9 @@ router.get("/createTrainee", async function (req, res, next) {
       name: "trainee",
     },
   });
-  res.render("trainee_view/create", { traineeRole: traineeRole });
+  res.render("layouts/master", {
+    content:"../trainee_view/create",
+     traineeRole: traineeRole });
 });
 
 router.post("/addTrainee", async function (req, res) {
@@ -208,7 +212,8 @@ router.get('/updateTrainee/:id', async (req, res) => {
 
   const traineeData = {...traineeInfo.dataValues, username, password, accountId};    //destructuring ES6
   
-  res.render('./trainee_view/update', {
+  res.render("layouts/master", {
+    content: "../trainee_view/update",
     traineeData
   })
 })
@@ -234,7 +239,9 @@ router.post('/editTrainee', async (req, res) => {
 
 /* GET create course category page. */
 router.get("/createcourseCategory", async function (req, res) {
-  res.render("./courseCategory_view/create");
+  res.render("layouts/master", {
+    content: "../courseCategory_view/create"
+  });
 });
 
 router.post("/addCourseCategory", async function (req, res) {
@@ -257,7 +264,8 @@ router.get("/updateCourseCategory/:updateId", async function (req, res) {
       }
     })
     const { id, name, description } = courseCategories[0].dataValues;
-    res.render("courseCategory_view/update", {
+    res.render("layouts/master", {
+      content: "../courseCategory_view/update",
       id: id,
       name: name,
       description: description
@@ -305,7 +313,8 @@ router.get("/deleteCourseCategory/:deleteId", async function (req, res) {
 /* GET create course page. */
 router.get("/createCourse", async function (req, res) {
   const courseCategories = await CourseCategory.findAll();
-  res.render("./course_view/create", {
+  res.render("layouts/master", {
+    content: "../course_view/create",
     courseCategories,
   });
 });
@@ -332,7 +341,8 @@ router.get("/updateCourse/:updateId", async function (req, res) {
     })
     const { id, name, description } = courses[0].dataValues;
 
-    res.render("course_view/update", {
+    res.render("layouts/master", {
+      content: "../course_view/update",
       id: id,
       courseName: name,
       description: description,
@@ -384,7 +394,8 @@ router.get("/assignTrainer", async (req, res) => {
   const trainers = await Trainer.findAll();
   
   const courses = await Course.findAll();
-  res.render("trainer_view/assign", {
+  res.render("layouts/master", {
+    content: "../trainer_view/assign",
     trainers,
     courses,  
   });
@@ -430,7 +441,8 @@ router.get("/assignTrainee", async (req, res) => {
   const trainees = await Trainee.findAll();
 
   const courses = await Course.findAll();
-  res.render("trainee_view/assign", {
+  res.render("layouts/master", {
+    content: "../trainee_view/assign",
     trainees,
     courses,
   });
@@ -465,28 +477,53 @@ await TraineeCourse.destroy({
 res.redirect('/trainingStaff');
 })
 
-
-
-
 /* GET Search Course. */
-// router.get("/search", async (req, res) => {
-//   res.render("search_view");
-// })
+router.get("/search", async (req, res) => {
+  res.render("layouts/master",{
+    content: "../search_view/search"
+  })
+})
 
-// router.post("/doSearch", async (req, res) => {
+router.post("/doSearch", async (req, res) => {
+// res.send(req.body);
+  const {courseName} = req.body;
 
-//   const {courseName} = req. body;
+  const trainers = await TrainerCourse.findAll({
+    include: [{
+      model: Course,
+      attributes: ['name'],
+      where: {
+        name: courseName
+      }
+    },
+    {
+      model: Trainer,
+      attributes: ['fullname'],     
+    }],
+    
+  })
 
-//   const trainers = await TrainerCourse.findAll({
-//     include: [{
-//       model: Course,
-//       attributes: ['name']
-//     }, {
-//       model: Trainer,
-//       attributes: ['fullnanme']
-//     }],
-//     attributes: ['trainerId, courseId']
-//   })
-// })
+  const trainees = await TraineeCourse.findAll({
+    include: [{
+      model: Course,
+      attributes: ['name'],
+      where: {
+        name: courseName
+      }
+    },
+    {
+      model: Trainee,
+      attributes: ['fullname']
+    }]
+   
+  })
+
+  res.render("layouts/master",{
+    content: "../search_view/search",
+    trainees,
+    trainers
+  })
+})
+
 
 module.exports = router;
