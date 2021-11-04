@@ -12,7 +12,7 @@ const TrainerCourse = database.db.TrainerCourse;
 const TraineeCourse = database.db.TraineeCourse;
 
 /* GET home page. */
-router.get("/", async function (req, res, next) {
+router.get("/", async function (req, res) {
   const accounts = await Account.findAll({
     include: Role,
   });
@@ -107,7 +107,7 @@ const deleteUserByRole = async (roleName, userId) => {
 };
 
 /* GET account page. */
-router.get("/viewAccount", async function (req, res, next) {
+router.get("/viewAccount", async function (req, res) {
   try {
     const { id } = req.query;
     const account = await getAccountById(id);
@@ -150,7 +150,7 @@ router.get("/deleteAccount", async (req, res) => {
 });
 
 /* GET create trainee page. */
-router.get("/createTrainee", async function (req, res, next) {
+router.get("/createTrainee", async function (req, res) {
   const traineeRole = await Role.findOne({
     where: {
       name: "trainee",

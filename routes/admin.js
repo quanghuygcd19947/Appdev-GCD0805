@@ -8,7 +8,7 @@ const Account = database.db.Account;
 const Trainer = database.db.trainer;
 
 /* GET home page. */
-router.get("/", async function (req, res, next) {
+router.get("/", async function (req, res) {
   const accounts = await Account.findAll({
     include: Role
   });
@@ -104,7 +104,7 @@ const deleteUserByRole = async (roleName, userId) => {
 }
 
 /* GET account page. */
-router.get("/viewAccount", async function (req, res, next) {
+router.get("/viewAccount", async function (req, res) {
   try {
     const {id} = req.query;
     const account = await getAccountById(id);
@@ -144,7 +144,7 @@ router.get("/deleteAccount", async (req, res) => {
 })
 
 /* GET create staff page. */
-router.get("/createStaff", async function (req, res, next) {
+router.get("/createStaff", async function (req, res) {
   const staffRole = await Role.findOne({
     where: {
       name: "trainingStaff",
@@ -178,7 +178,7 @@ router.post("/addStaff", async function (req, res) {
   }
 });
 
-router.get("/updateStaff/:updateId", async function (req, res, next) {
+router.get("/updateStaff/:updateId", async function (req, res) {
   try {
     const { updateId } = req. params;
     const staffAccount = await Account.findAll({
@@ -220,7 +220,7 @@ router.post("/editStaff", async function (req, res) {
 })
 
 /* GET create trainer page. */
-router.get("/createTrainer", async function (req, res, next) {
+router.get("/createTrainer", async function (req, res) {
   const trainerRole = await Role.findOne({
     where: {
       name: "trainer",
@@ -255,7 +255,7 @@ router.post("/addTrainer", async function (req, res) {
   }
 });
 
-router.get("/updateTrainer/:updateId", async function (req, res, next) {
+router.get("/updateTrainer/:updateId", async function (req, res) {
   try {
     const { updateId } = req. params;
     const trainerAccount = await Account.findAll({
