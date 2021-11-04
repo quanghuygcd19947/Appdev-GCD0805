@@ -6,6 +6,7 @@ const Role = database.db.Role;
 const TrainingStaff = database.db.TrainingStaff;
 const Account = database.db.Account;
 const Trainer = database.db.trainer;
+const Admin = database.db.Admin;
 
 /* GET home page. */
 router.get("/", async function (req, res) {
@@ -143,6 +144,41 @@ router.get("/deleteAccount", async (req, res) => {
   }
 })
 
+/* GET create admin page. */
+router.get("/createAdmin", async function (req, res) {
+  const role = await Role.findOne({
+    where: {
+      name: 'admin'
+    }
+  })
+
+  res.render("layouts/master", {
+    content: "../admin_view/create",
+    role
+  })
+})
+
+router.post("/addAdmin", async function (req, res) {
+  const { username, password, fullname, roleId } = req.body;
+  try {
+    const admin = await Admin.create({
+      fullname
+    })
+    if (admin) {
+      await Account.create({
+        username,
+        password,
+        roleId,
+        userId: admin.dataValues.id
+      })
+    }
+
+    res.redirect('/admin');
+  } catch (error) {
+  console.log("🚀 ~ file: admin.js ~ line 180 ~ error", error)
+  }
+})
+
 /* GET create staff page. */
 router.get("/createStaff", async function (req, res) {
   const staffRole = await Role.findOne({
@@ -227,7 +263,7 @@ router.get("/createTrainer", async function (req, res) {
     },
   });
   res.render("layouts/master", {
-    content: "trainer_view/create",
+    content: "../trainer_view/create",
     trainerRole: trainerRole });
 });
 

@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Trainer-Course</h6>
+      </div>
+      <div class="card-body">
+        <a href="/trainer/updateTrainer/<%= trainerId %>">
+          <button type="button" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus-circle"></i> Trainer update
+          </button>
+        </a>
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th scope="col">Course</th>
+                <th scope="col">View Deatail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% trainerCourses.forEach(function(trainerCourse) { %>
+              <tr>
+                <td><%= trainerCourse.course.name %></td>
+                <td>
+                  <div>
+                    <a
+                      href="/trainer/viewTraineeOnCourses/<%= trainerCourse.courseId %>"
+                    >
+                      <button type="button" class="btn btn-warning btn-sm">
+                        <i class="fas fa-user-tag"></i> View
+                      </button>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

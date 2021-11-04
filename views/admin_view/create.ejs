@@ -1,0 +1,73 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+/>
+<h1>Create Admin</h1>
+<div class="container">
+  <form action="/admin/addAdmin" method="POST">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        name="username"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="id_password"
+        name="password"
+        autocomplete="current-password"
+        required
+      /><i class="far fa-eye" id="togglePassword" style="cursor: pointer"></i>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Fullname</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        name="fullname"
+        required
+      />
+    </div>
+    <div class="mb-3" style="display: none">
+      <label for="exampleInputPassword1" class="form-label">Role</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputPassword1"
+        name="roleId"
+        value="<%= role.dataValues.id %>"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-check-circle"></i> Create
+    </button>
+    <a href="/admin">
+      <button type="button" class="btn btn-secondary">
+        <i class="fas fa-times-circle"></i> Cancel
+      </button>
+    </a>
+  </form>
+</div>
+<script>
+  const togglePassword = document.querySelector("#togglePassword");
+  const password = document.querySelector("#id_password");
+
+  togglePassword.addEventListener("click", function (e) {
+    const type =
+      password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    this.classList.toggle("fa-eye-slash");
+  });
+</script>

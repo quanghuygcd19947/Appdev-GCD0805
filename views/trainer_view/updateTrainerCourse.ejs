@@ -1,0 +1,101 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+/>
+<h1 style="text-align: center">Update Trainer</h1>
+<div class="container">
+  <form action="/trainer/editTrainer" method="POST">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">ID</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        value="<%= trainer.id %>"
+        name="id"
+        readonly
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Fullname</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        value="<%= trainer.fullname %>"
+        name="fullname"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Age</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        value="<%= trainer.age %>"
+        name="age"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Specialty</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        value="<%= trainer.specialty %>"
+        name="specialty"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        value="<%= trainer.email %>"
+        name="email"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Address</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        value="<%= trainer.address %>"
+        name="address"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-check-circle"></i> Update
+    </button>
+    <a href="/trainer">
+      <button type="button" class="btn btn-secondary">
+        <i class="fas fa-times-circle"></i> Cancel
+      </button>
+    </a>
+  </form>
+</div>
+<script>
+  const togglePassword = document.querySelector("#togglePassword");
+  const password = document.querySelector("#id_password");
+
+  togglePassword.addEventListener("click", function (e) {
+    const type =
+      password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    this.classList.toggle("fa-eye-slash");
+  });
+</script>
