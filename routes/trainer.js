@@ -7,6 +7,8 @@ const Course = database.db.course;
 const Trainee = database.db.trainee;
 const TrainerCourse = database.db.TrainerCourse;
 const TraineeCourse = database.db.TraineeCourse;
+
+
 router.get("/", async function (req, res, next) {
   try {
     const { userId } = req.session.user;
